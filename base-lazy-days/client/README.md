@@ -7,3 +7,5 @@ placeholderData : useQuery를 실행할 때 데이터를 제공하기 때문에 
 initialData : initialData는 placeholderData와 반대되는 것이다 이것 또한 useQuery에 대한 옵션이며 클라이언트에서 제공됩니다 하지만 placeholderData와 달리 캐시에 추가해야 하는 데이터입니다
 
 keepPreviousData : 쿼리 키 변형 전까지 이전 데이터를 유지
+
+select 옵션: ex) filter === 'all' ? undefined : selectFn // 쿼리로 반환된 data가 selectFn로 들어가고 필터링된 데이터를 반환함
