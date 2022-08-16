@@ -10,7 +10,7 @@ async function getTreatments(): Promise<Treatment[]> {
 }
 
 export function useTreatments(): Treatment[] {
-  const { data = [] } = useQuery(queryKeys.treatments, getTreatments, {});
+  const { data = [] } = useQuery(queryKeys.treatments, getTreatments);
   return data;
 }
 

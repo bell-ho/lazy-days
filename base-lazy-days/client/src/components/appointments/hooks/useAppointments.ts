@@ -16,6 +16,8 @@ import { AppointmentDateMap } from '../types';
 import { getAvailableAppointments } from '../utils';
 import { getMonthYearDetails, getNewMonthYear, MonthYear } from './monthYear';
 
+const commentOptions = { staleTime: 0, cacheTime: 300000 };
+
 // for useQuery call
 async function getAppointments(
   year: string,
@@ -77,6 +79,7 @@ export function useAppointments(): UseAppointments {
     queryClient.prefetchQuery(
       [queryKeys.appointments, nextMonthYear.year, nextMonthYear.month],
       () => getAppointments(nextMonthYear.year, nextMonthYear.month),
+      commentOptions,
     );
   }, [queryClient, monthYear]);
 
@@ -89,7 +92,14 @@ export function useAppointments(): UseAppointments {
   const { data: appointments = {} } = useQuery(
     [queryKeys.appointments, monthYear.year, monthYear.month],
     () => getAppointments(monthYear.year, monthYear.month),
-    { select: showAll ? undefined : selectFn },
+    {
+      select: showAll ? undefined : selectFn,
+      ...commentOptions,
+      refetchOnReconnect: true,
+      refetchOnWindowFocus: true,
+      refetchOnMount: true,
+      refetchInterval: 60000, // 1분마다 업데이트
+    },
   );
 
   /** ****************** END 3: useQuery  ******************************* */
