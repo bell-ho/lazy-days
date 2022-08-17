@@ -1,7 +1,13 @@
+import { renderWithQueryClient } from '../../../test-utils';
+import { Treatments } from '../Treatments';
 import { screen } from '@testing-library/react';
 
-import { Treatments } from '../Treatments';
+test('renders response from query', async () => {
+  renderWithQueryClient(<Treatments />);
 
-test('renders response from query', () => {
-  // write test here
+  const treatmentTitles = await screen.findByRole('heading', {
+    name: /massage|facial|scrup/i,
+  });
+
+  expect(treatmentTitles).toHaveLength(3);
 });

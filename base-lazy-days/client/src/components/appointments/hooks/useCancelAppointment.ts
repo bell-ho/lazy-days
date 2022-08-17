@@ -18,15 +18,11 @@ async function removeAppointmentUser(appointment: Appointment): Promise<void> {
 export function useCancelAppointment(): (appointment: Appointment) => void {
   const toast = useCustomToast();
   const queryClient = useQueryClient();
-  const { mutate } = useMutation(
-    [],
-    (appointment) => removeAppointmentUser(appointment),
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries([queryKeys.appointments]);
-        toast({ title: '취소', status: 'info' });
-      },
+  const { mutate } = useMutation(removeAppointmentUser, {
+    onSuccess: () => {
+      queryClient.invalidateQueries([queryKeys.appointments]);
+      toast({ title: '취소', status: 'info' });
     },
-  );
+  });
   return mutate;
 }
